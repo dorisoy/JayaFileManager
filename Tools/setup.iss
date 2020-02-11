@@ -1,9 +1,9 @@
 ; process command line arguments
 #ifndef APP_VERSION
-	#define APP_VERSION "1.0"
+	#define APP_VERSION "1.0.0.0"
 #endif
 #ifndef APP_ROOT
-	#define APP_ROOT ".."
+	#define APP_ROOT "..\"
 #endif
 
 #define APP_NAME "Jaya - Cross Plat"
@@ -11,9 +11,10 @@
 #define APP_EMAIL "walia.rubal@gmail.com"
 #define APP_URL "https://github.com/waliarubal/Jaya"
 #define APP_EXECUTABLE "Jaya.Ui.exe"
+#define APP_ID "{395A0915-9AD7-4CB5-A72B-3369DF5656E4}"
 
 [Setup]
-AppId={{395A0915-9AD7-4CB5-A72B-3369DF5656E4}
+AppId={{#APP_ID}
 AppName={#APP_NAME}
 AppVersion={#APP_VERSION}
 AppContact={#APP_EMAIL}
@@ -35,6 +36,10 @@ SolidCompression=yes
 WizardStyle=classic
 SetupLogging=yes
 UsePreviousAppDir=yes
+
+[INI]
+Filename: "config.ini"; Section: "InstallSettings"; Flags: uninsdeletesection
+Filename: "config.ini"; Section: "InstallSettings"; Key: "InstallPath"; String: "{app}"
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -60,11 +65,15 @@ var
   sUnInstPath: String;
   sUnInstallString: String;
 begin
-  sUnInstPath := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\395A0915-9AD7-4CB5-A72B-3369DF5656E4_is1');
-  sUnInstallString := '';
-  if not RegQueryStringValue(HKLM, sUnInstPath, 'UninstallString', sUnInstallString) then
-    RegQueryStringValue(HKCU, sUnInstPath, 'UninstallString', sUnInstallString);
-  Result := sUnInstallString;
+  sUnInstPath := ExpandConstant('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{{#APP_ID}');
+  if (IsWin64()) then begin
+    RegQueryStringValue(HKLM64, sUnInstPath, 'UninstallString', sUnInstallString);
+    Result := sUnInstallString;
+  end
+  else begin
+    RegQueryStringValue(HKLM32, sUnInstPath, 'UninstallString', sUnInstallString);
+    Result := sUnInstallString;
+  end;
 end;
 
 function IsUpgrade(): Boolean;
@@ -88,8 +97,7 @@ begin
   // get the uninstall string of the old app
   sUnInstallString := GetUninstallString();
   if sUnInstallString <> '' then begin
-    sUnInstallString := RemoveQuotes(sUnInstallString);
-    if Exec(sUnInstallString, '/SILENT /NORESTART /SUPPRESSMSGBOXES','', SW_HIDE, ewWaitUntilTerminated, iResultCode) then
+    if ShellExec('', 'msiexec',  '/uninstall {#APP_ID} /quiet', '', SW_SHOWNORMAL, ewWaitUntilTerminated, iResultCode) then // for ver 1.4.4 -> 1.4.5
       Result := 3
     else
       Result := 2;
@@ -99,6 +107,21 @@ end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
+  case CurStep of
+    ssInstall:
+      begin
+        if (IsUpgrade()) then
+        begin
+          UnInstallOldVersion();
+        end;
+      end;
+
+     ssPostInstall:
+     begin
+      
+     end;
+  end;
+
   if (CurStep=ssInstall) then
   begin
     if (IsUpgrade()) then
@@ -106,4 +129,14 @@ begin
       UnInstallOldVersion();
     end;
   end;
+end;
+
+function InitializeSetup(): boolean;
+begin
+  if (IsUpgrade()) then
+  begin
+    MsgBox(ExpandConstant('{cm:RemoveOld}'), mbInformation, MB_OK);
+    UnInstallOldVersion();
+  end;
+	Result := true;
 end;

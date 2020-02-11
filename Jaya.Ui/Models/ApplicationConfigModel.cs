@@ -7,6 +7,7 @@ namespace Jaya.Ui.Models
 {
     public class ApplicationConfigModel : ConfigModelBase
     {
+
         [JsonProperty]
         public bool IsItemCheckBoxVisible
         {
