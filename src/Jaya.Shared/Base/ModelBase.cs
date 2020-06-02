@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -37,7 +41,7 @@ namespace Jaya.Shared.Base
 
             if (value == null)
                 return false;
-            else if (value != null && _variables.ContainsKey(propertyName) && (object)value == _variables[propertyName])
+            if (_variables.ContainsKey(propertyName) && (object)value == _variables[propertyName])
                 return false;
 
             if (_variables.ContainsKey(propertyName))

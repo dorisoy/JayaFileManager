@@ -1,4 +1,8 @@
-﻿using Avalonia;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Avalonia;
 using Avalonia.Logging;
 using Avalonia.Logging.Serilog;
 
@@ -11,7 +15,7 @@ namespace Jaya.Ui
         {
             return AppBuilder.Configure<App>()
                            .UsePlatformDetect()
-                           .LogToDebug(LogEventLevel.Warning);
+                           .LogToDebug(LogEventLevel.Information);
         }
 
         // The entry point. Things aren't ready yet, so at this point

@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using System.Composition;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Jaya.Shared.Services
 {
-    [Export(nameof(MemoryCacheService), typeof(IService))]
-    [Shared]
-    public sealed class MemoryCacheService: IService
+    public sealed class MemoryCacheService: IMemoryCacheService
     {
         MemoryCache _cache;
 

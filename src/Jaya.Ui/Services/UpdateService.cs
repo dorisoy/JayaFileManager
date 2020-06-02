@@ -1,9 +1,13 @@
-﻿using Jaya.Shared.Services;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
+using Jaya.Shared.Services;
 using Jaya.Ui.Models;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 using System;
-using System.Composition;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -11,23 +15,18 @@ using System.Threading.Tasks;
 
 namespace Jaya.Ui.Services
 {
-    [Shared]
-    [Export(nameof(UpdateService), typeof(IService))]
     public sealed class UpdateService: IService
     {
         const string GITHUB_API = "https://api.github.com/";
 
         readonly SharedService _sharedService;
-        readonly PlatformService _platformService;
+        readonly IPlatformService _platformService;
         readonly bool _isPortable;
 
-        [ImportingConstructor]
-        public UpdateService(
-            [Import(nameof(SharedService))]IService sharedService,
-            [Import(nameof(PlatformService))]IService platformService)
+        public UpdateService()
         {
-            _sharedService = sharedService as SharedService;
-            _platformService = platformService as PlatformService;
+            _sharedService = ServiceLocator.Instance.GetService<SharedService>();
+            _platformService = ServiceLocator.Instance.GetService<IPlatformService>();
 
             _isPortable = true;
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using System;
 using System.Windows.Input;
 
 namespace Jaya.Shared.Base
@@ -42,8 +46,7 @@ namespace Jaya.Shared.Base
         private void RaiseCanExecuteChanged()
         {
             var handler = CanExecuteChanged;
-            if (handler != null)
-                handler.Invoke(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         public bool CanExecute(object parameter)

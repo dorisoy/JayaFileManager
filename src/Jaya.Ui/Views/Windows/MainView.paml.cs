@@ -1,4 +1,8 @@
-﻿using Avalonia;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -16,14 +20,6 @@ namespace Jaya.Ui.Views.Windows
             this.AttachDevTools();
 #endif
             App.ThemeSelector.EnableThemes(this);
-            DoubleTapped += MainView_DoubleTapped;
-        }
-        
-        private void MainView_DoubleTapped(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState == WindowState.Maximized
-                ? WindowState.Normal
-                : WindowState.Maximized;
         }
 
         private void InitializeComponent()

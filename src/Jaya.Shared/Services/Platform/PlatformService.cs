@@ -1,13 +1,14 @@
-﻿using System;
-using System.Composition;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Jaya.Shared.Services
 {
-    [Export(nameof(PlatformService), typeof(IService))]
-    [Shared]
-    public class PlatformService : IService
+    public class PlatformService : IPlatformService
     {
         public void OpenBrowser(string url)
         {

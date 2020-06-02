@@ -1,31 +1,28 @@
-﻿using Jaya.Shared;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
 using Jaya.Shared.Services;
 using Jaya.Ui.Models;
 using System.Collections.Generic;
-using System.Composition;
 
 namespace Jaya.Ui.Services
 {
-    [Export(nameof(SharedService), typeof(IService))]
-    [Shared]
     public sealed class SharedService : IService
     {
         readonly Subscription<byte> _onSimpleCommand;
         readonly Subscription<KeyValuePair<byte, object>> _onParameterizedCommand;
 
-        readonly CommandService _commandService;
-        readonly ConfigurationService _configService;
-        readonly ProviderService _providerService;
+        readonly ICommandService _commandService;
+        readonly IConfigurationService _configService;
 
-        [ImportingConstructor]
         public SharedService(
-            [Import(nameof(CommandService))]IService commandService, 
-            [Import(nameof(ConfigurationService))]IService configService, 
-            [Import(nameof(ProviderService))]IService providerService)
+            ICommandService commandService,
+            IConfigurationService configService)
         {
-            _commandService = commandService as CommandService;
-            _configService = configService as ConfigurationService;
-            _providerService = providerService as ProviderService;
+            _commandService = commandService;
+            _configService = configService;
 
             _onSimpleCommand = _commandService.EventAggregator.Subscribe<byte>(SimpleCommandAction);
             _onParameterizedCommand = _commandService.EventAggregator.Subscribe<KeyValuePair<byte, object>>(ParameterizedCommandAction);
@@ -65,7 +62,7 @@ namespace Jaya.Ui.Services
             _configService.Set(UpdateConfiguration);
         }
 
-        void SimpleCommandAction(byte type)
+        public void SimpleCommandAction(byte type)
         {
             switch ((CommandType)type)
             {

@@ -1,17 +1,18 @@
-﻿using Jaya.Shared.Services;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
+using Jaya.Shared.Services;
 using System.Collections.Generic;
-using System.Composition;
 
 namespace Jaya.Ui.Services
 {
-    [Export(nameof(ProviderService), typeof(IService))]
-    [Shared]
     public sealed class ProviderService : IService
     {
-        [ImportingConstructor]
-        public ProviderService([ImportMany]IEnumerable<IProviderService> providers)
+        public ProviderService()
         {
-            Providers = providers;
+            Providers = ServiceLocator.Instance.GetProviders();
         }
 
         public IEnumerable<IProviderService> Providers { get; }

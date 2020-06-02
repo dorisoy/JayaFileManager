@@ -1,4 +1,8 @@
-﻿using Jaya.Shared;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
 using Jaya.Shared.Base;
 using Jaya.Shared.Models;
 using Jaya.Ui.Models;
@@ -92,9 +96,10 @@ namespace Jaya.Ui.ViewModels
                 {
                     var serviceInstance = service as ProviderServiceBase;
 
-                    var serviceNode = new TreeNodeModel(service as ProviderServiceBase, null, ItemType.Service);
-                    serviceNode.Label = service.Name;
-                    serviceNode.ImagePath = service.ImagePath;
+                    var serviceNode = new TreeNodeModel(service as ProviderServiceBase, null, ItemType.Service)
+                    {
+                        Label = service.Name, ImagePath = service.ImagePath
+                    };
                     serviceNode.NodeExpanded += OnNodeExpanded;
                     serviceNode.AddDummyChild();
                     AddChildNode(node, serviceNode);

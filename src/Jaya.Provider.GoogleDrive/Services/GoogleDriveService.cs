@@ -1,4 +1,8 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using Google.Apis.Oauth2.v2;
@@ -13,15 +17,12 @@ using Jaya.Shared.Models;
 using Jaya.Shared.Services;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Jaya.Provider.GoogleDrive.Services
 {
-    [Export(typeof(IProviderService))]
-    [Shared]
     public class GoogleDriveService : ProviderServiceBase, IProviderService
     {
         const string CLIENT_ID = "538742722606-equtrav33c2tqaq2io7h19mkf4ch6jbp.apps.googleusercontent.com";

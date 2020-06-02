@@ -1,4 +1,8 @@
-﻿using Avalonia.Controls;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Avalonia.Controls;
 using Avalonia.Threading;
 using Jaya.Shared.Services;
 using System;
@@ -25,6 +29,12 @@ namespace Jaya.Shared.Base
             protected set => Set(value);
         }
 
+        public bool IsLoaded 
+        { 
+            get => Get<bool>(); 
+            internal set => Set(value); 
+        }
+
         protected bool IsDesignMode => Design.IsDesignMode;
 
         protected EventAggregator EventAggregator
@@ -35,7 +45,7 @@ namespace Jaya.Shared.Base
                     return default;
 
                 if (_eventAggregator == null)
-                    _eventAggregator = GetService<CommandService>().EventAggregator;
+                    _eventAggregator = GetService<ICommandService>().EventAggregator;
 
                 return _eventAggregator;
             }
@@ -50,6 +60,7 @@ namespace Jaya.Shared.Base
 
                 return _simpleCommand;
             }
+            set => _simpleCommand = value;
         }
 
         public ICommand ParameterizedCommand

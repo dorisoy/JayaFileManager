@@ -1,16 +1,17 @@
-﻿using Jaya.Shared;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
 using Jaya.Shared.Models;
 using Jaya.Shared.Services;
 using Jaya.Ui.ViewModels.Windows;
 using Jaya.Ui.Views.Windows;
 using System;
 using System.Collections.Generic;
-using System.Composition;
 
 namespace Jaya.Ui.Services
 {
-    [Export(nameof(NavigationService), typeof(IService))]
-    [Shared]
     public sealed class NavigationService: IService
     {
         readonly CommandService _commandService;
@@ -20,8 +21,7 @@ namespace Jaya.Ui.Services
         RelayCommand<WindowOptionsModel> _openWindow;
         SelectionChangedEventArgs _directoryChangedArgs;
 
-        [ImportingConstructor]
-        public NavigationService([Import(nameof(CommandService))]IService commandService)
+        public NavigationService(ICommandService commandService)
         {
             _commandService = commandService as CommandService;
 

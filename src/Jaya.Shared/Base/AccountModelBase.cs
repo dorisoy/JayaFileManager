@@ -1,4 +1,8 @@
-﻿using Jaya.Shared.Base;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared.Base;
 using Newtonsoft.Json;
 
 namespace Jaya.Shared.Models
@@ -6,7 +10,7 @@ namespace Jaya.Shared.Models
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class AccountModelBase: ModelBase
     {
-        public AccountModelBase(string id, string name)
+        protected AccountModelBase(string id, string name)
         {
             Id = id;
             Name = name;
@@ -56,8 +60,7 @@ namespace Jaya.Shared.Models
 
         public override bool Equals(object obj)
         {
-            var compareWith = obj as AccountModelBase;
-            if (compareWith == null)
+            if (!(obj is AccountModelBase compareWith))
                 return false;
 
             return compareWith.GetHashCode() == GetHashCode();

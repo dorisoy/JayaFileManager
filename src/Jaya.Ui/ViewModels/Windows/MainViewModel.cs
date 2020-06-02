@@ -1,4 +1,8 @@
-﻿using Jaya.Shared;
+﻿//
+// Copyright (c) Rubal Walia. All rights reserved.
+// Licensed under the 3-Clause BSD license. See LICENSE file in the project root for full license information.
+//
+using Jaya.Shared;
 using Jaya.Shared.Base;
 using Jaya.Ui.Models;
 using Jaya.Ui.Services;
@@ -10,7 +14,6 @@ namespace Jaya.Ui.ViewModels.Windows
     {
         readonly Subscription<SelectionChangedEventArgs> _onDirectoryChanged;
         readonly SharedService _shared;
-
         public MainViewModel()
         {
             WindowTitle = Constants.APP_NAME;
@@ -20,6 +23,8 @@ namespace Jaya.Ui.ViewModels.Windows
             _shared = GetService<SharedService>();
             _shared.ToolbarConfiguration.PropertyChanged += OnPropertyChanged;
             _shared.PaneConfiguration.PropertyChanged += OnPropertyChanged;
+
+            SimpleCommand = new RelayCommand<byte>(_shared.SimpleCommandAction);
         }
 
         ~MainViewModel()
