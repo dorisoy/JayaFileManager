@@ -75,6 +75,8 @@ namespace Jaya.Ui.ViewModels
                     break;
 
                 case ItemType.Computer:
+                    directory = obj.Object as DirectoryModel;
+                    break;
                 case ItemType.Account:
                     _account = obj.Object as AccountModelBase;
                     break;
