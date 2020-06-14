@@ -21,45 +21,30 @@
 
         <ListBox
             Grid.RowSpan="2"
+            Classes="InstalledPlugins"
             Items="{Binding Plugins, Mode=OneWay}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             SelectedItem="{Binding SelectedPlugin, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.Styles>
-                            <Style Selector="Image">
-                                <Setter Property="Width" Value="16" />
-                                <Setter Property="Height" Value="16" />
-                            </Style>
-                            <Style Selector="TextBlock">
-                                <Setter Property="Margin" Value="4 0 0 0" />
-                            </Style>
-                        </Grid.Styles>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding ImagePath, Mode=OneWay, Converter={StaticResource BitmapValueConverter}}" />
                         <TextBlock Grid.Column="1" Text="{Binding Name, Mode=OneWay}" />
+                        <CheckBox Grid.Column="2" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Column="1" Margin="4,0">
-            <Grid.Styles>
-                <Style Selector="Image">
-                    <Setter Property="Width" Value="32" />
-                    <Setter Property="Height" Value="32" />
-                    <Setter Property="VerticalAlignment" Value="Top" />
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                </Style>
-                <Style Selector="TextBlock">
-                    <Setter Property="TextWrapping" Value="Wrap" />
-                    <Setter Property="Margin" Value="4 0 0 0" />
-                </Style>
-            </Grid.Styles>
+        <Grid
+            Grid.Column="1"
+            Margin="4,0"
+            Classes="SelectedPluginHeader">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />

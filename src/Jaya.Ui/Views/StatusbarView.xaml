@@ -8,73 +8,14 @@
     xmlns:vm="clr-namespace:Jaya.Ui.ViewModels;assembly=Jaya.Ui"
     j:ViewModelLocator.AutoWireViewModel="True"
     Design.Width="800"
-    mc:Ignorable="d" Margin="0,-4,0,0" ZIndex="999">
-  <UserControl.Template>
-    <ControlTemplate>
-      <DockPanel>
-        <Rectangle Classes="UpwardShadow" DockPanel.Dock="Top"/>
-        <ContentPresenter Name="PART_ContentPresenter"
-                        Background="{DynamicResource StatusBar.BackgroundBrush}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        Content="{TemplateBinding Content}"
-                        Padding="{TemplateBinding Padding}"
-                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-      </DockPanel>
-    </ControlTemplate>
-  </UserControl.Template>
+    mc:Ignorable="d">
     <Design.DataContext>
         <vm:StatusbarViewModel />
     </Design.DataContext>
     <UserControl.Styles>
-        <Style Selector="Border.Separator">
-            <Setter Property="IsHitTestVisible" Value="False" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0.5" />
-            <Setter Property="BorderBrush" Value="{DynamicResource StatusBar.SeparatorBrush}" />
-            <Setter Property="Margin" Value="10,4" />
-        </Style>
-
-        <Style Selector="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-
-        <Style Selector="ToggleButton">
-            <Setter Property="Margin" Value="1 0" />
-            <Setter Property="Padding" Value="2" />
-            <Setter Property="MinWidth" Value="21" />
-            <Setter Property="MinHeight" Value="21" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-        </Style>
-        <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush4}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
-        </Style>
-        <Style Selector="ToggleButton:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}" />
-        </Style>
-        <Style Selector="ToggleButton:disabled">
-            <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}" />
-        </Style>
-        <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush4}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource ThemeAccentBrush}" />
-        </Style>
-
-        <Style Selector="ToggleButton &gt; Image">
-            <Setter Property="Width" Value="16" />
-            <Setter Property="Height" Value="16" />
-        </Style>
-        <Style Selector="ToggleButton &gt; DrawingPresenter">
-            <Setter Property="Width" Value="16" />
-            <Setter Property="Height" Value="16" />
-        </Style>
+        
     </UserControl.Styles>
-    <Grid Margin="6,2">
+    <Grid Margin="6,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -84,17 +25,32 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Text="{Binding Count, Mode=OneWay, StringFormat={}{0} items, FallbackValue=0L}" />
         <Border Grid.Column="1" Classes="Separator" />
-        <ToggleButton
-            Grid.Column="3"
-            IsChecked="{Binding PaneConfig.IsDetailsView, Mode=TwoWay}"
-            ToolTip.Tip="Dispaly information about each item in the window.">
-            <DrawingPresenter Drawing="{DynamicResource Icon.BulletList}" />
-        </ToggleButton>
+        <!--Un-comment out the two commented-out sections below to see the new file list view modes!-->
+        <!--StackPanel Grid.Column="3" Orientation="Horizontal">
+          <ToggleButton Width="60"
+                Grid.Column="3"
+                IsChecked="{Binding PaneConfig.IsListView, Mode=TwoWay}"
+                Content="LIST VIEW"/>
+          <ToggleButton Width="65"
+                Grid.Column="3"
+                IsChecked="{Binding PaneConfig.IsTilesView, Mode=TwoWay}"
+                Content="TILES VIEW"/>
+          <ToggleButton Width="90"
+                Grid.Column="3"
+                IsChecked="{Binding PaneConfig.IsContentView, Mode=TwoWay}"
+                Content="CONTENT VIEW"/-->
+          <ToggleButton
+              Grid.Column="3"
+              IsChecked="{Binding PaneConfig.IsDetailsView, Mode=TwoWay}"
+              ToolTip.Tip="Display information about each item in the window.">
+            <DrawingPresenter Drawing="{DynamicResource Icon.DetailsView}" />
+          </ToggleButton>
+        <!--/StackPanel-->
         <ToggleButton
             Grid.Column="4"
             IsChecked="{Binding PaneConfig.IsThumbnailView, Mode=TwoWay}"
             ToolTip.Tip="Display items by using large thumbnails.">
-            <DrawingPresenter Drawing="{DynamicResource Icon.Image}" />
+            <DrawingPresenter Drawing="{DynamicResource Icon.IconsView}" />
         </ToggleButton>
     </Grid>
 </UserControl>
